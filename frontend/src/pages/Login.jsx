@@ -7,9 +7,9 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { post } from '../api/CallAPi';
+import { post } from '../api/CallApi';
 
-const login = () => {
+const Login = () => {
 
   const[token, setToken] = useState('');
   const[error, setError] = useState('');
@@ -17,9 +17,30 @@ const login = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async () => {              //auth
     const email = emailRef.current.value;
-  }
+    const password = passwordRef.current.value;
+    const res = await post('/login', {email, password});
+    if(res.errors) {
+      setError(res.message);
+    }
+    if(res.status === false && !res.errors){
+      setError(res.message);
+    }
+    if(res.data.status === true){
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('user', JSON.stringify(res.data.user));
+      navigate('/products');
+    }
+  };
+
+  useEffect(() => {                             //get token
+    const token = localStorage.getItem('token');
+    if (token) {
+      setToken(token);
+      navigate('/products');
+    }
+  }, [token]);
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -78,4 +99,4 @@ const login = () => {
   )
 }
 
-export default login
+export default Login
