@@ -1,12 +1,9 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import { redirect } from "react-router-dom";
+import React from 'react'
+
 const Protected = () => {
-  const auth = localStorage.getItem('token');
-  return auth ? <Outlet /> : redirect ('/');
-};
+  return (
+    <div>Protected</div>
+  )
+}
 
-export default Protected;
-
-
-
+export default Protected

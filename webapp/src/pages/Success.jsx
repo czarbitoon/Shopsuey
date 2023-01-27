@@ -1,21 +1,9 @@
-import { Button, Stack, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import React from 'react'
 
 const Success = () => {
-  const navigate = useNavigate();
   return (
-    <Stack justifyContent={'center'} alignItems={'center'} height='100vh'>
-      <Typography variant='h4' color={'success'}>
-        Success
-      </Typography>
-      <p>
-        We have recieved your payment
-      </p>
-      <Button onClick={() => navigate('/products/dashboard')} my={3}>
-        Dashboard
-      </Button>
-    </Stack>
-  );
-};
+    <div>Success</div>
+  )
+}
 
-export default Success;
+export default Success

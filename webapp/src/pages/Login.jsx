@@ -22,11 +22,7 @@ const Login = () => {
     const res = await post('/login', { email, password });
     if (res.errors) {
       setError(res.message);
-    }
-    if (res.status === false && !res.errors) {
-      setError(res.message);
-    }
-    if (res.data.status === true) {
+    } else {
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.user));
       navigate('/products');

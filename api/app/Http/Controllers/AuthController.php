@@ -15,8 +15,10 @@ class AuthController extends Controller
 {
     use HttpResponses;
 
-    public function login(LoginUserRequest $request)
+    public function login(Request $request)
     {
+
+        return 'goods';
         if (!Auth::attempt($request->only(['email', 'password']))) {
             return $this->error('', 'Credentials do not match', 401);
         }
@@ -26,6 +28,11 @@ class AuthController extends Controller
             'user' => $user,
             'token' => $user->createToken('API Token of ' . $user->name)->plainTextToken,
         ]);
+
+        return response()->json([
+            'user' => $user,
+            'token' => $user->createToken("API TOKEN")->plainTextToken
+        ], 200);
     }
 
     public function register(StoreUserRequest $request)
