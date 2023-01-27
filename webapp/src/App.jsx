@@ -1,19 +1,18 @@
-import { Stack } from "@mui/material"
-import { Route, Routes } from "react-router-dom"
-import Dashboard from "./pages/Dashboard"
-import Login from "./pages/Login"
-import Product from "./pages/Product"
-import Cancel from "./pages/Cancel"
+import { Stack } from '@mui/material';
+import { Route, Routes } from 'react-router-dom';
+import Cancel from './pages/Cancel';
+import Dashboard from './pages/Dashboard';
+import Login from './pages/Login';
+import Plan from './pages/Product';
 import Protected from './pages/Protected';
-import Success from "./pages/Success"
-
+import Success from './pages/Success';
 const App = () => {
   return (
     <Stack>
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='products/*' element={<Protected />}>
-          <Route index element={<Product />} />
+          <Route index element={<Plan />} />
           <Route path='dashboard' element={<Dashboard />} />
           <Route path='payment/success' element={<Success />} />
           <Route path='cancel' element={<Cancel />} />
@@ -23,5 +22,4 @@ const App = () => {
   );
 };
 
-export default App
-
+export default App;

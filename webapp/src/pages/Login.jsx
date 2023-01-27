@@ -10,31 +10,30 @@ import { useNavigate } from 'react-router-dom';
 import { post } from '../api/CallApi';
 
 const Login = () => {
-
-  const[token, setToken] = useState('');
-  const[error, setError] = useState('');
+  const [token, setToken] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
   const emailRef = useRef();
   const passwordRef = useRef();
 
-  const handleSubmit = async () => {              //auth
+  const handleSubmit = async () => {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    const res = await post('/login', {email, password});
-    if(res.errors) {
+    const res = await post('/login', { email, password });
+    if (res.errors) {
       setError(res.message);
     }
-    if(res.status === false && !res.errors){
+    if (res.status === false && !res.errors) {
       setError(res.message);
     }
-    if(res.data.status === true){
+    if (res.data.status === true) {
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.user));
       navigate('/products');
     }
   };
 
-  useEffect(() => {                             //get token
+  useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       setToken(token);
@@ -48,12 +47,11 @@ const Login = () => {
         sx={{
           marginTop: 8,
           display: 'flex',
-          flexDirection:'column',
+          flexDirection: 'column',
           alignItems: 'center',
         }}
       >
-      
-      <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>
@@ -68,35 +66,39 @@ const Login = () => {
             id='email'
             label='Email Address'
             name='email'
-            />
-            <TextField
-              margin='normal'
-              required
-              fullWidth
-              name='password'
-              label='Password'
-              type='password'
-              id='password'
-              inputRef={passwordRef}
-              />
-              {error && (
-                <Typography mt={1} color='error' textAlign={'center'}>
-                  {error}
-                </Typography>
-              )}
-              <Button
-                type='submit'
-                fullWidth
-                variant='contained'
-                sx={{ mt: 3, mb: 2 }}
-                onClick={handleSubmit}
-              >
-                Sign In
-              </Button>
-            </Box>
+            //autoComplete='email'
+            autoFocus
+            inputRef={emailRef}
+          />
+          <TextField
+            margin='normal'
+            required
+            fullWidth
+            name='password'
+            label='Password'
+            type='password'
+            id='password'
+            inputRef={passwordRef}
+            //autoComplete='current-password'
+          />
+          {error && (
+            <Typography mt={1} color='error' textAlign={'center'}>
+              {error}
+            </Typography>
+          )}
+          <Button
+            type='submit'
+            fullWidth
+            variant='contained'
+            sx={{ mt: 3, mb: 2 }}
+            onClick={handleSubmit}
+          >
+            Sign In
+          </Button>
+        </Box>
       </Box>
     </Container>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
